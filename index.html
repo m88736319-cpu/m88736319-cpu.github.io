@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#090b14" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <title>Smart Reader PRO AI</title>
+  <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<div class="phone-wrapper">
+  <div class="phone-frame" id="phoneFrame">
+
+    <!-- ══ STATUS BAR ══ -->
+    <div class="status-bar">
+      <div class="status-left">
+        <i class="fas fa-signal"></i>
+        <i class="fas fa-wifi"></i>
+      </div>
+      <span id="statusTime">9:41 AM</span>
+      <div class="status-right">
+        <span>100%</span>
+        <i class="fas fa-battery-full"></i>
+      </div>
+    </div>
+
+    <!-- ══ SCREENS CONTAINER ══ -->
+    <div class="screens-container">
+
+      <!-- ████ SCREEN 1: HOME ████ -->
+      <div class="screen active" id="screenHome">
+        <div class="home-bg">
+          <!-- Particles -->
+          <canvas class="particle-canvas" id="particleCanvas"></canvas>
+
+          <!-- Title -->
+          <div class="app-title-area">
+            <h1 class="app-title">
+              Smart Reader
+              <span class="title-icon"><i class="fas fa-book-open-reader"></i></span>
+            </h1>
+            <p class="app-subtitle">PRO AI Edition</p>
+          </div>
+
+          <!-- Search Bar -->
+          <div class="home-search-bar glass-card" style="width:100%">
+            <button class="mic-btn" onclick="startVoiceSearch(event)" title="بحث صوتي">
+              <i class="fas fa-microphone"></i>
+            </button>
+            <input type="text" id="searchInput" class="search-input"
+              placeholder="ابحث أو أدخل رابطاً…"
+              onkeypress="handleSearchKey(event)" />
+            <button class="search-submit-btn" onclick="doSearch()">
+              <i class="fas fa-arrow-left"></i>
+            </button>
+          </div>
+
+          <!-- AI Brain Button -->
+          <div class="ai-btn-section">
+            <button class="ai-brain-btn" onclick="navigateTo('screenChat')">
+              <div class="brain-wrap">
+                <div class="brain-ring"></div>
+                <div class="brain-ring r2"></div>
+                <div class="brain-core">
+                  <i class="fas fa-brain"></i>
+                </div>
+              </div>
+              <span class="ai-label" id="aiVaultLabel">AI Vault</span>
+            </button>
+          </div>
+
+          <!-- Quick Features Grid -->
+          <div class="quick-grid glass-card" style="width:100%">
+            <div class="feat-item" onclick="navigateTo('screenReader')">
+              <div class="feat-icon" style="background:linear-gradient(135deg,rgba(34,211,238,.35),rgba(99,102,241,.45))">
+                <i class="fas fa-book-open-reader"></i>
+              </div>
+              <span>Smart Reader</span>
+            </div>
+            <div class="feat-item" onclick="navigateTo('screenSearch')">
+              <div class="feat-icon" style="background:linear-gradient(135deg,rgba(168,85,247,.35),rgba(236,72,153,.35))">
+                <i class="fas fa-magnifying-glass-chart"></i>
+              </div>
+              <span>AI Search</span>
+            </div>
+            <div class="feat-item" onclick="navigateTo('screenBrowser')">
+              <div class="feat-icon" style="background:linear-gradient(135deg,rgba(245,158,11,.35),rgba(239,68,68,.35))">
+                <i class="fas fa-globe"></i>
+              </div>
+              <span>Browser</span>
+            </div>
+            <div class="feat-item" onclick="navigateTo('screenOcr')">
+              <div class="feat-icon" style="background:linear-gradient(135deg,rgba(16,185,129,.35),rgba(34,211,238,.35))">
+                <i class="fas fa-image"></i>
+              </div>
+              <span>OCR ترجمة</span>
+            </div>
+          </div>
+
+          <!-- Stats Bar -->
+          <div class="stats-bar glass-card" style="width:100%">
+            <div class="stat-item">
+              <span class="stat-num" id="stat_searches">0</span>
+              <span class="stat-lbl">بحث</span>
+            </div>
+            <div class="stat-div"></div>
+            <div class="stat-item">
+              <span class="stat-num" id="stat_translations">0</span>
+              <span class="stat-lbl">ترجمة</span>
+            </div>
+            <div class="stat-div"></div>
+            <div class="stat-item">
+              <span class="stat-num" id="stat_pages">0</span>
+              <span class="stat-lbl">صفحة</span>
+            </div>
+          </div>
+
+        </div><!-- .home-bg -->
+      </div><!-- #screenHome -->
+
+
+      <!-- ████ SCREEN 2: AI SEARCH ████ -->
+      <div class="screen" id="screenSearch">
+        <div class="screen-inner search-screen">
+          <div class="screen-header glass-dark">
+            <button class="back-btn" onclick="navigateTo('screenHome')"><i class="fas fa-arrow-right"></i></button>
+            <h2>البحث الذكي</h2>
+            <button class="header-action-btn" onclick="startVoiceSearch(event)"><i class="fas fa-microphone"></i></button>
+          </div>
+
+          <div class="search-box-area">
+            <div class="search-bar-alt glass-card">
+              <button class="mic-btn" onclick="startVoiceSearch(event)"><i class="fas fa-microphone"></i></button>
+              <input type="text" id="searchInput2" class="search-input"
+                placeholder="ابحث عن أي شيء…"
+                onkeypress="handleSearchKey2(event)" />
+              <button class="search-submit-btn" onclick="doSearch2()"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
+
+          <div class="filter-tabs">
+            <button class="filter-tab active" onclick="setFilter(this,'all')">الكل</button>
+            <button class="filter-tab" onclick="setFilter(this,'manga')">مانجا</button>
+            <button class="filter-tab" onclick="setFilter(this,'news')">أخبار</button>
+            <button class="filter-tab" onclick="setFilter(this,'video')">فيديو</button>
+          </div>
+
+          <div class="results-area" id="resultsArea">
+            <div class="empty-search">
+              <div class="ei"><i class="fas fa-magnifying-glass-plus"></i></div>
+              <p>ابدأ البحث للحصول على نتائج ذكية</p>
+            </div>
+          </div>
+        </div>
+      </div><!-- #screenSearch -->
+
+
+      <!-- ████ SCREEN 3: SMART READER PRO ████ -->
+      <div class="screen" id="screenReader">
+        <div class="screen-inner reader-screen">
+          <div class="screen-header glass-dark">
+            <button class="back-btn" onclick="navigateTo('screenHome')"><i class="fas fa-arrow-right"></i></button>
+            <h2><span class="title-text">Smart Reader</span> <span class="pro-tag">PRO</span></h2>
+            <div class="header-actions">
+              <button class="header-action-btn" id="readerTranslateBtn" onclick="translateReaderCurrent()" title="ترجمة الصفحة أو الصورة الحالية">
+                <i class="fas fa-language"></i>
+              </button>
+              <button class="header-action-btn" id="ttsToggleBtn" onclick="toggleAutoTTS()" title="قراءة تلقائية">
+                <i class="fas fa-volume-high"></i>
+              </button>
+              <button class="header-action-btn" onclick="openLangMenu()" title="اختيار اللغة">
+                <i class="fas fa-globe"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Lang popup -->
+          <div class="lang-popup" id="langPopup"></div>
+
+          <!-- URL bar -->
+          <div class="url-section">
+            <div class="url-row glass-card">
+              <i class="fas fa-link url-icon"></i>
+              <input type="url" id="readerUrlInput" class="url-input"
+                placeholder="أدخل رابط الموقع أو الصورة…"
+                onkeypress="if(event.key==='Enter')readerLoad()" />
+              <button class="url-go-btn" onclick="readerLoad()">
+                <i class="fas fa-play"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="reader-tools-row" id="readerToolsRow">
+            <button class="ocr-ctrl-btn primary" id="readerTranslateCurrentBtn" onclick="translateReaderCurrent()">
+              <i class="fas fa-language"></i> <span class="btn-label" id="readerTranslateCurrentLabel">ترجمة الحالي</span>
+            </button>
+            <button class="ocr-ctrl-btn" id="readerTranslateImageBtn" onclick="readerTranslateImage()">
+              <i class="fas fa-image"></i> <span class="btn-label" id="readerTranslateImageLabel">ترجمة الصورة</span>
+            </button>
+            <button class="ocr-ctrl-btn" id="readerTranslatePageBtn" onclick="readerTranslatePage()">
+              <i class="fas fa-file-lines"></i> <span class="btn-label" id="readerTranslatePageLabel">ترجمة الصفحة</span>
+            </button>
+          </div>
+
+          <!-- WebView area -->
+          <div class="reader-webview" id="readerWebview">
+            <div class="rv-empty">
+              <div class="rv-empty-icon"><i class="fas fa-book-open-reader"></i></div>
+              <h3>Smart Reader PRO</h3>
+              <p>أدخل رابطاً لتحميل الصفحة<br/>ومشاهدة الترجمة الكسولة فوق الصور</p>
+              <div class="rv-pills">
+                <span class="rv-pill"><i class="fas fa-eye"></i> OCR تلقائي</span>
+                <span class="rv-pill"><i class="fas fa-language"></i> ترجمة AI</span>
+                <span class="rv-pill"><i class="fas fa-ban"></i> بلا إعلانات</span>
+                <span class="rv-pill"><i class="fas fa-bolt"></i> ×3 سرعة</span>
+              </div>
+              <button class="save-btn" style="margin-top:14px;width:auto;padding:10px 22px"
+                onclick="readerLoad('https://mangadex.org')">
+                <i class="fas fa-play-circle"></i> جرّب MangaDex
+              </button>
+            </div>
+          </div>
+        </div>
+      </div><!-- #screenReader -->
+
+
+      <!-- ████ SCREEN 4: OCR ████ -->
+      <div class="screen" id="screenOcr">
+        <div class="screen-inner ocr-screen">
+          <div class="screen-header glass-dark">
+            <button class="back-btn" onclick="navigateTo('screenHome')"><i class="fas fa-arrow-right"></i></button>
+            <h2>OCR <span class="pro-tag">AI</span></h2>
+            <button class="header-action-btn" onclick="OcrService.clearCache()"><i class="fas fa-database"></i></button>
+          </div>
+
+          <!-- Drop zone -->
+          <div class="ocr-drop-zone" id="ocrDropZone"
+            ondragover="event.preventDefault()"
+            ondrop="handleOcrDrop(event)"
+            onclick="document.getElementById('ocrFileInput').click()">
+            <div class="dz-icon"><i class="fas fa-cloud-arrow-up"></i></div>
+            <p><span class="drop-main-text">اسحب صورة هنا أو </span><span class="dz-browse">اختر ملف</span></p>
+            <p style="margin-top:4px;font-size:10px">يدعم: PNG · JPG · WEBP · GIF</p>
+          </div>
+          <input type="file" id="ocrFileInput" accept="image/*" style="display:none"
+            onchange="handleOcrFileInput(this)" />
+
+          <!-- Script Pills -->
+          <div class="script-row">
+            <button class="script-pill active" data-script="latin"    onclick="setScript(this)">Latin</button>
+            <button class="script-pill"         data-script="japanese" onclick="setScript(this)">日本語</button>
+            <button class="script-pill"         data-script="chinese"  onclick="setScript(this)">中文</button>
+            <button class="script-pill"         data-script="korean"   onclick="setScript(this)">한국어</button>
+            <button class="script-pill"         data-script="arabic"   onclick="setScript(this)">عربي</button>
+          </div>
+
+          <!-- Preview -->
+          <div class="ocr-preview-area">
+            <div id="ocrPreview"></div>
+          </div>
+
+          <!-- Controls -->
+          <div class="ocr-ctrl-row">
+            <button class="ocr-ctrl-btn primary" id="ocrSpeakAllBtn"
+              style="display:none" onclick="ocrSpeakAll()">
+              <i class="fas fa-volume-high"></i> <span class="btn-label">قراءة الكل</span>
+            </button>
+            <button class="ocr-ctrl-btn" onclick="OcrService.clearCache()">
+              <i class="fas fa-trash-can"></i> مسح الكاش
+            </button>
+          </div>
+        </div>
+      </div><!-- #screenOcr -->
+
+
+      <!-- ████ SCREEN 5: AI CHAT ████ -->
+      <div class="screen" id="screenChat">
+        <div class="screen-inner chat-screen">
+          <div class="screen-header glass-dark">
+            <button class="back-btn" onclick="navigateTo('screenHome')"><i class="fas fa-arrow-right"></i></button>
+            <div class="chat-header-info">
+              <div class="chat-avatar-sm"><i class="fas fa-brain"></i></div>
+              <div>
+                <h2 id="privateAiHeading">المساعد الخاص</h2>
+                <span class="online-dot" id="privateAiStatus">● مساحة خاصة</span>
+              </div>
+            </div>
+            <button class="header-action-btn" onclick="clearChat()"><i class="fas fa-trash-can"></i></button>
+          </div>
+
+          <div class="private-ai-banner glass-card">
+            <div>
+              <strong id="privateAiTitle">ركن الذكاء الخاص</strong>
+              <p id="privateAiDesc">المحادثات هنا في مساحة مستقلة، وتقدر تقفل المحتوى على طول قبل ما أحد يشوفه.</p>
+            </div>
+            <button class="save-btn" type="button" id="privateAiToggleBtn" onclick="toggleAiPrivacyMask()">
+              <i class="fas fa-shield-halved"></i> <span class="btn-label" id="privateAiToggleLabel">قفل المحادثة</span>
+            </button>
+          </div>
+
+          <div class="chat-privacy-mask hidden" id="chatPrivacyMask">
+            <div class="chat-privacy-card glass-card">
+              <div class="chat-privacy-icon"><i class="fas fa-user-shield"></i></div>
+              <h3 id="chatPrivacyMaskTitle">المحتوى مقفول</h3>
+              <p id="chatPrivacyMaskDesc">اضغط فتح عشان تظهر مساحة الذكاء، أو اتركها مقفولة لو في أحد حولك.</p>
+              <div class="guide-actions-row">
+                <button class="save-btn" type="button" onclick="toggleAiPrivacyMask(false)">
+                  <i class="fas fa-lock-open"></i> <span class="btn-label" id="chatPrivacyMaskBtn">فتح المساحة</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-bubble ai-bubble">
+              <div class="bubble-avatar"><i class="fas fa-brain"></i></div>
+              <div class="bubble-content glass-card">
+                <p class="bubble-text">مرحباً! أنا Smart Reader PRO AI 🤖</p>
+                <ul class="help-list" style="margin-top:8px">
+                  <li><i class="fas fa-book-open-reader"></i> Smart Reader + OCR + ترجمة فورية</li>
+                  <li><i class="fas fa-ban"></i> حذف الإعلانات تلقائياً</li>
+                  <li><i class="fas fa-bolt"></i> ترجمة دفعية × 3 سرعة</li>
+                  <li><i class="fas fa-volume-high"></i> قراءة صوتية فورية عند اللمس</li>
+                  <li><i class="fas fa-eye"></i> Lazy Load – يترجم عند التمرير فقط</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="quick-suggestions">
+            <button class="suggestion-chip" onclick="sendQuick('كيف أستخدم Smart Reader؟')">
+              <i class="fas fa-circle-info"></i> مساعدة
+            </button>
+            <button class="suggestion-chip" onclick="sendQuick('ترجم صورة مانجا')">
+              <i class="fas fa-image"></i> OCR مانجا
+            </button>
+            <button class="suggestion-chip" onclick="sendQuick('كيف أضيف مفتاح OpenAI؟')">
+              <i class="fas fa-key"></i> API Key
+            </button>
+          </div>
+
+          <div class="chat-input-area glass-card">
+            <button class="chat-mic-btn" onclick="startVoiceSearch(event)"><i class="fas fa-microphone"></i></button>
+            <input type="text" id="chatInput" class="chat-input"
+              placeholder="اكتب رسالتك…"
+              onkeypress="handleChatKey(event)" />
+            <button class="chat-send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div><!-- #screenChat -->
+
+
+      <!-- ████ SCREEN 6: SETTINGS ████ -->
+      <div class="screen" id="screenSettings">
+        <div class="screen-inner settings-screen">
+          <div class="screen-header glass-dark">
+            <button class="back-btn" onclick="navigateTo('screenHome')"><i class="fas fa-arrow-right"></i></button>
+            <h2>الإعدادات</h2>
+            <div></div>
+          </div>
+
+          <div class="settings-scroll">
+
+            <div class="settings-hub glass-card">
+              <div>
+                <div class="group-title"><i class="fas fa-sliders"></i> مركز الإعدادات</div>
+                <div class="group-subtitle" id="settingsHubDesc">رتّبت لك الإعدادات حسب الاستخدام: ترجمة، خصوصية، OCR، صوت، ملفات، ثم المظهر.</div>
+              </div>
+              <div class="settings-hub-grid">
+                <button class="hub-chip" type="button" onclick="scrollToSettingsGroup('cfgSectionTranslate')"><i class="fas fa-language"></i> <span id="hubTranslateLabel">الترجمة</span></button>
+                <button class="hub-chip" type="button" onclick="scrollToSettingsGroup('cfgSectionPrivacy')"><i class="fas fa-shield-halved"></i> <span id="hubPrivacyLabel">الخصوصية</span></button>
+                <button class="hub-chip" type="button" onclick="scrollToSettingsGroup('cfgSectionOcr')"><i class="fas fa-image"></i> <span id="hubOcrLabel">OCR</span></button>
+                <button class="hub-chip" type="button" onclick="scrollToSettingsGroup('cfgSectionTts')"><i class="fas fa-volume-high"></i> <span id="hubTtsLabel">الصوت</span></button>
+                <button class="hub-chip" type="button" onclick="scrollToSettingsGroup('cfgSectionRecords')"><i class="fas fa-folder-tree"></i> <span id="hubFilesLabel">الملفات</span></button>
+                <button class="hub-chip" type="button" onclick="scrollToSettingsGroup('cfgSectionTheme')"><i class="fas fa-palette"></i> <span id="hubThemeLabel">المظهر</span></button>
+              </div>
+            </div>
+
+            <!-- Profile card -->
+            <div class="profile-card glass-card">
+              <div class="profile-avatar"><i class="fas fa-user-astronaut"></i></div>
+              <div>
+                <div class="profile-name">Smart Reader PRO AI</div>
+                <span class="pro-badge">v7.0 Total Upgrade</span>
+              </div>
+              <div class="cfg-status" id="cfgStatus">
+                <span class="dot red"></span> غير مُهيَّأ
+              </div>
+            </div>
+
+            <!-- API Keys group -->
+            <div class="settings-group glass-card" id="cfgSectionTranslate">
+              <div class="group-title"><i class="fas fa-language"></i> الترجمة والاتصال</div>
+              <div class="group-subtitle">الترجمة صارت تشتغل بوضع نصّي ذكي داخل التطبيق بدل صفحة Google Translate المكسورة داخل الإطار.</div>
+
+              <div class="setting-item col">
+                <label><i class="fas fa-robot" style="color:#10b981"></i> OPENAI_API_KEY (ترجمة احتياطية ذكية)</label>
+                <div class="key-input-wrap">
+                  <input type="password" autocomplete="new-password" class="key-input" id="cfgOpenaiKey" placeholder="sk-…" style="-webkit-text-security:disc" />
+                  <button class="key-vis-btn" onclick="toggleKeyVis('cfgOpenaiKey')"><i class="fas fa-eye"></i></button>
+                </div>
+              </div>
+
+              <div class="setting-item col">
+                <label><i class="fas fa-translate" style="color:var(--cyan)"></i> GOOGLE_TRANSLATE_API_KEY</label>
+                <div class="key-input-wrap">
+                  <input type="password" autocomplete="new-password" class="key-input" id="cfgGoogleKey" placeholder="AIza…" style="-webkit-text-security:disc" />
+                  <button class="key-vis-btn" onclick="toggleKeyVis('cfgGoogleKey')"><i class="fas fa-eye"></i></button>
+                </div>
+                <div class="setting-help-note" id="googleKeyHelp">مفتاح Google مفيد لترجمة النصوص ونتائج OCR فقط، لكنه ليس سبب مشكلة صفحة الترجمة الكاملة داخل الإطار.</div>
+              </div>
+
+              <div class="setting-item col">
+                <label><i class="fas fa-server" style="color:#f59e0b"></i> BACKEND_URL (اختياري)</label>
+                <input type="url" class="key-input" id="cfgBackendUrl" placeholder="https://your-backend.com" />
+              </div>
+
+              <div class="setting-item">
+                <span><i class="fas fa-globe"></i> DEFAULT_LANG</span>
+                <select class="setting-select" id="cfgDefaultLang"></select>
+              </div>
+
+              <form onsubmit="event.preventDefault();AppConfig.saveFromUI()">
+                <div class="settings-action-row">
+                  <button type="submit" class="save-btn">
+                    <i class="fas fa-save"></i> <span class="btn-label">حفظ الإعدادات</span>
+                  </button>
+                  <button type="button" class="ocr-ctrl-btn" onclick="clearGoogleKey()">
+                    <i class="fas fa-eraser"></i> <span class="btn-label" id="clearGoogleKeyLabel">تفريغ مفتاح Google</span>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- OCR Script -->
+            <div class="settings-group glass-card" id="cfgSectionOcr">
+              <div class="group-title"><i class="fas fa-font"></i> OCR Script الافتراضي</div>
+              <div class="group-subtitle">اختر نوع النص الغالب في الصور عشان الاستخراج والترجمة يطلعوا أدق.</div>
+              <div class="script-row" style="padding:0">
+                <button class="script-pill active" data-script="latin"    onclick="setScript(this)">Latin</button>
+                <button class="script-pill"         data-script="japanese" onclick="setScript(this)">日本語</button>
+                <button class="script-pill"         data-script="chinese"  onclick="setScript(this)">中文</button>
+                <button class="script-pill"         data-script="korean"   onclick="setScript(this)">한국어</button>
+                <button class="script-pill"         data-script="arabic"   onclick="setScript(this)">عربي</button>
+              </div>
+            </div>
+
+            <!-- TTS -->
+            <div class="settings-group glass-card" id="cfgSectionTts">
+              <div class="group-title"><i class="fas fa-volume-high"></i> الصوت (TTS)</div>
+              <div class="group-subtitle">تحكم بسرعة القراءة وتشغيل الصوت التلقائي للنصوص المترجمة.</div>
+              <div class="setting-item">
+                <span><i class="fas fa-gauge-high"></i> سرعة القراءة</span>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <input type="range" class="setting-range" min="0.3" max="2" step="0.05" value="0.45"
+                    id="cfgTtsRate" oninput="changeTtsRate(this.value)" />
+                  <span id="cfgTtsRateVal" style="font-size:12px;color:var(--tx2);min-width:36px">0.45x</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="settings-group glass-card" id="cfgSectionPrivacy">
+              <div class="group-title"><i class="fas fa-shield-halved"></i> الخصوصية والتنظيف</div>
+              <div class="group-subtitle">هنا تتحكم في قفل مساحة الذكاء ومانع الإعلانات داخل واجهة التطبيق.</div>
+
+              <div class="setting-item">
+                <div class="stt-label-grp">
+                  <span><i class="fas fa-user-secret" style="color:var(--cyan)"></i> وضع خصوصية الذكاء</span>
+                  <span class="stt-desc">يقفل شاشة الذكاء تلقائياً لما تفتحها على الجوال</span>
+                </div>
+                <label class="toggle-sw"><input type="checkbox" checked id="cfgAiPrivacy"><span class="toggle-track"></span></label>
+              </div>
+
+              <div class="setting-item">
+                <div class="stt-label-grp">
+                  <span><i class="fas fa-ban" style="color:#ef4444"></i> مانع الإعلانات</span>
+                  <span class="stt-desc">يحاول إزالة الوحدات الإعلانية والعناصر المزعجة داخل المحتوى المسموح</span>
+                </div>
+                <label class="toggle-sw"><input type="checkbox" checked id="cfgAdShield"><span class="toggle-track"></span></label>
+              </div>
+            </div>
+
+            <div class="settings-group glass-card" id="cfgSectionDiagnostics">
+              <div class="group-title"><i class="fas fa-stethoscope"></i> الفحص العميق والتشخيص</div>
+              <div class="group-subtitle">فحص حيّ لحالة الترجمة، الإعلانات، الخصوصية، والجاهزية على الجوال.</div>
+              <div class="diagnostic-grid" id="diagnosticGrid"></div>
+              <div class="guide-actions-row">
+                <button class="ocr-ctrl-btn" type="button" onclick="renderDiagnosticsPanel()"><i class="fas fa-rotate-right"></i> <span id="runDeepCheckLabel">تحديث الفحص</span></button>
+              </div>
+            </div>
+
+            <!-- Visual Guide -->
+            <div class="settings-group glass-card">
+              <div class="group-title"><i class="fas fa-circle-question"></i> الدليل المرئي للتطبيق</div>
+              <div class="group-subtitle">شرح بصري سريع لكل شاشة عشان الاستخدام يكون واضح حتى على الجوال.</div>
+              <div class="guide-intro">كل زر أساسي صار له شرح بصري سريع داخل التطبيق، عشان أي مستخدم جديد يفهم من أول مرة.</div>
+              <div id="visualGuideCards" class="visual-guide-grid"></div>
+              <div class="guide-actions-row">
+                <button class="save-btn" type="button" onclick="openGuideCenter()">
+                  <i class="fas fa-images"></i> <span class="btn-label">فتح الشرح التفاعلي</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Tool files and restore -->
+            <div class="settings-group glass-card" id="cfgSectionRecords">
+              <div class="group-title"><i class="fas fa-folder-tree"></i> ملفات الأدوات والاسترجاع</div>
+              <div class="group-subtitle">كل أداة صار لها سجل منظم مع استيراد وتصدير واسترجاع محذوفات.</div>
+              <div class="guide-intro">كل عنصر محفوظ صار له ملف JSON مستقل تقدر تصدره لوحده، وأي عنصر ينحذف يروح إلى سلة المحذوفات مع إمكانية التراجع والاسترجاع.</div>
+              <div class="records-summary-grid" id="recordsSummaryGrid"></div>
+              <div class="record-tabs" id="recordTabs">
+                <button class="record-tab active" type="button" onclick="setRecordTab('all', false)">الكل</button>
+                <button class="record-tab" type="button" onclick="setRecordTab('search', false)">البحث</button>
+                <button class="record-tab" type="button" onclick="setRecordTab('browser', false)">المتصفح</button>
+                <button class="record-tab" type="button" onclick="setRecordTab('reader', false)">القارئ</button>
+                <button class="record-tab" type="button" onclick="setRecordTab('ocr', false)">OCR</button>
+                <button class="record-tab" type="button" onclick="setRecordTab('chat', false)">الذكاء</button>
+              </div>
+              <div class="record-list" id="toolRecordsList"></div>
+              <div class="guide-actions-row">
+                <button class="ocr-ctrl-btn" type="button" onclick="exportRecordsFile()"><i class="fas fa-file-export"></i> تصدير ملف السجل</button>
+                <button class="ocr-ctrl-btn" type="button" onclick="document.getElementById('recordsImportInput').click()"><i class="fas fa-file-import"></i> استيراد نسخة محفوظة</button>
+                <button class="ocr-ctrl-btn" type="button" onclick="toggleTrashBin()"><i class="fas fa-trash-can-arrow-up"></i> سلة المحذوفات</button>
+              </div>
+              <input type="file" id="recordsImportInput" accept="application/json" style="display:none" onchange="handleRecordsImportInput(this)" />
+              <div class="backup-note">تقدر الآن تحفظ نسخة احتياطية كاملة، أو تصدر ملف مستقل لأي عنصر محفوظ من داخل القائمة.</div>
+              <div class="trash-panel hidden" id="trashPanel">
+                <div class="trash-panel-head">
+                  <strong>سلة المحذوفات</strong>
+                  <button class="ocr-ctrl-btn" type="button" onclick="clearTrashForever()"><i class="fas fa-trash"></i> حذف نهائي</button>
+                </div>
+                <div class="record-list" id="trashRecordsList"></div>
+              </div>
+            </div>
+
+            <!-- PRO Features -->
+            <div class="settings-group glass-card">
+              <div class="group-title"><i class="fas fa-bolt" style="color:#f59e0b"></i> تحسينات الأداء</div>
+              <div class="group-subtitle">مفاتيح سريعة لضبط الأداء والفلترة والترجمة على الصور.</div>
+
+              <div class="setting-item">
+                <div class="stt-label-grp">
+                  <span><i class="fas fa-eye" style="color:var(--cyan)"></i> Lazy Translation</span>
+                  <span class="stt-desc">يترجم الصور المرئية فقط أثناء التمرير</span>
+                </div>
+                <label class="toggle-sw"><input type="checkbox" checked id="proLazy"><span class="toggle-track"></span></label>
+              </div>
+
+              <div class="setting-item">
+                <div class="stt-label-grp">
+                  <span><i class="fas fa-comment-dots" style="color:#a78bfa"></i> Speech Bubble Filter</span>
+                  <span class="stt-desc">يُصفّي OCR – يُقلّل الضوضاء ~70%</span>
+                </div>
+                <label class="toggle-sw"><input type="checkbox" checked id="proBubble"><span class="toggle-track"></span></label>
+              </div>
+
+              <div class="setting-item">
+                <div class="stt-label-grp">
+                  <span><i class="fas fa-ban" style="color:#ef4444"></i> Ad Removal</span>
+                  <span class="stt-desc">يحذف ads/doubleclick/advert كل 1.5 ث</span>
+                </div>
+                <label class="toggle-sw"><input type="checkbox" checked id="proAds"><span class="toggle-track"></span></label>
+              </div>
+
+              <div class="setting-item">
+                <div class="stt-label-grp">
+                  <span><i class="fas fa-gauge-high" style="color:#22d3ee"></i> Batch Translate ×3</span>
+                  <span class="stt-desc">طلب API واحد لكل الصورة = ×3 أسرع</span>
+                </div>
+                <label class="toggle-sw"><input type="checkbox" checked id="proBatch"><span class="toggle-track"></span></label>
+              </div>
+
+              <div class="setting-item">
+                <div class="stt-label-grp">
+                  <span><i class="fas fa-volume-up" style="color:#34d399"></i> Instant TTS on Tap</span>
+                  <span class="stt-desc">اضغط فقاعة → تشغيل صوتي فوري</span>
+                </div>
+                <label class="toggle-sw"><input type="checkbox" checked id="proTts"><span class="toggle-track"></span></label>
+              </div>
+
+              <!-- Cache stats -->
+              <div class="pro-stats-panel glass-card" id="proStatsPanel">
+                <div class="pstat"><i class="fas fa-database" style="color:#f59e0b"></i> <span id="psCacheSize">0</span> مخزّن</div>
+                <div class="pstat"><i class="fas fa-ban" style="color:#ef4444"></i> Ad Block: ON</div>
+                <div class="pstat"><i class="fas fa-bolt" style="color:var(--cyan)"></i> Translate: ×3</div>
+                <div class="pstat"><i class="fas fa-eye" style="color:#34d399"></i> Lazy: ON</div>
+              </div>
+
+              <button class="ocr-ctrl-btn" onclick="OcrService.clearCache();document.getElementById('psCacheSize').textContent='0'">
+                <i class="fas fa-trash-can"></i> مسح الكاش
+              </button>
+
+              <button class="save-btn btn-danger"
+                onclick="navigateTo('screenReader');setTimeout(()=>{readerLoad('https://mangadex.org')},300)">
+                <i class="fas fa-play-circle"></i> <span class="btn-label">تجربة ميزات PRO الآن</span>
+              </button>
+            </div>
+
+            <!-- Theme -->
+            <div class="settings-group glass-card" id="cfgSectionTheme">
+              <div class="group-title"><i class="fas fa-palette"></i> المظهر</div>
+              <div class="group-subtitle">واجهة أخف وأنظف مع ألوان مرتبة ومريحة على الجوال.</div>
+              <div class="theme-row">
+                <span class="theme-lbl">السمة:</span>
+                <div class="theme-btns">
+                  <button class="theme-btn active" data-theme="purple"
+                    style="background:linear-gradient(135deg,#6c63ff,#a855f7)"
+                    onclick="setTheme('purple')"></button>
+                  <button class="theme-btn" data-theme="blue"
+                    style="background:linear-gradient(135deg,#3b82f6,#06b6d4)"
+                    onclick="setTheme('blue')"></button>
+                  <button class="theme-btn" data-theme="green"
+                    style="background:linear-gradient(135deg,#10b981,#34d399)"
+                    onclick="setTheme('green')"></button>
+                  <button class="theme-btn" data-theme="fire"
+                    style="background:linear-gradient(135deg,#f59e0b,#ef4444)"
+                    onclick="setTheme('fire')"></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="app-ver">
+              <i class="fas fa-circle-info"></i>
+              Smart Reader PRO AI v7.0 · Total redesign, deep diagnostics, clean reader mode, privacy & mobile upgrade
+            </div>
+
+          </div><!-- .settings-scroll -->
+        </div>
+      </div><!-- #screenSettings -->
+
+
+      <!-- ████ SCREEN 7: BROWSER ████ -->
+      <div class="screen" id="screenBrowser">
+        <div class="browser-screen">
+
+          <!-- AppBar -->
+          <div class="browser-appbar glass-dark">
+            <button class="back-btn" onclick="navigateTo('screenHome')">
+              <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <div class="browser-url-field glass-card">
+              <span class="browser-favicon" id="browserFavicon">
+                <i class="fas fa-globe"></i>
+              </span>
+              <input type="text" id="browserAddressBar" class="browser-addr-input"
+                placeholder="ابحث أو اكتب رابط…"
+                onkeydown="handleBrowserKey(event)"
+                oninput="onAddressBarInput()"
+                onfocus="onAddressBarFocus()"
+                onblur="onAddressBarBlur()"
+                autocomplete="off" spellcheck="false" dir="ltr" />
+              <button class="browser-clear-btn" id="browserClearBtn"
+                onclick="clearAddressBar()" style="display:none">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+
+            <div class="browser-appbar-actions">
+              <button class="header-action-btn" id="browserTranslateBtn" onclick="browserTranslateCurrent()" title="ترجمة الحالي"><i class="fas fa-language"></i></button>
+              <button class="header-action-btn" id="browserCleanBtn" onclick="browserOpenCleanReader()" title="عرض نظيف"><i class="fas fa-align-left"></i></button>
+              <button class="header-action-btn" onclick="browserSearch()" title="بحث / فتح"><i class="fas fa-search"></i></button>
+              <button class="header-action-btn" id="reloadBtn" onclick="browserReload()" title="إعادة التحميل"><i class="fas fa-rotate-right"></i></button>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="browser-progress-track" id="browserProgressTrack">
+            <div class="browser-progress-bar" id="browserProgressBar" style="width:0%"></div>
+            <span class="browser-progress-label" id="browserProgressLabel">0%</span>
+          </div>
+
+          <!-- WebView Area -->
+          <div class="browser-webview-area" id="browserWebviewArea">
+            <iframe id="browserIframe" class="browser-iframe" src="about:blank"
+              sandbox="allow-scripts allow-forms allow-top-navigation-by-user-activation"
+              referrerpolicy="no-referrer" title="Browser"></iframe>
+
+            <!-- Start Page -->
+            <div class="browser-startpage" id="browserStartPage">
+              <div class="startpage-logo"><i class="fas fa-globe"></i></div>
+              <h2>Browser</h2>
+              <p>ابحث أو أدخل رابطاً للبدء</p>
+              <div class="quick-sites">
+                <button class="quick-site" onclick="browserLoad('https://duckduckgo.com')">
+                  <div class="qs-icon" style="background:#111827">
+                    <i class="fas fa-duck" style="color:#f97316;font-size:16px"></i>
+                  </div>
+                  <span>DuckDuckGo</span>
+                </button>
+                <button class="quick-site" onclick="browserLoad('https://www.youtube.com')">
+                  <div class="qs-icon" style="background:#ff0000">
+                    <i class="fab fa-youtube" style="color:white;font-size:18px"></i>
+                  </div>
+                  <span>YouTube</span>
+                </button>
+                <button class="quick-site" onclick="browserLoad('https://ar.wikipedia.org')">
+                  <div class="qs-icon" style="background:#eee">
+                    <i class="fas fa-book" style="color:#333;font-size:16px"></i>
+                  </div>
+                  <span>Wikipedia</span>
+                </button>
+                <button class="quick-site" onclick="browserLoad('https://www.reddit.com')">
+                  <div class="qs-icon" style="background:#ff4500">
+                    <i class="fab fa-reddit-alien" style="color:white;font-size:18px"></i>
+                  </div>
+                  <span>Reddit</span>
+                </button>
+                <button class="quick-site" onclick="browserLoad('https://mangadex.org')">
+                  <div class="qs-icon" style="background:linear-gradient(135deg,#f97316,#6366f1)">
+                    <i class="fas fa-book-open" style="color:white;font-size:16px"></i>
+                  </div>
+                  <span>MangaDex</span>
+                </button>
+                <button class="quick-site" onclick="browserLoad('https://github.com')">
+                  <div class="qs-icon" style="background:#24292e">
+                    <i class="fab fa-github" style="color:white;font-size:18px"></i>
+                  </div>
+                  <span>GitHub</span>
+                </button>
+              </div>
+              <div class="browser-sugg-list" id="browserSuggestions"></div>
+            </div>
+
+            <!-- Error Page -->
+            <div class="browser-error-page" id="browserErrorPage">
+              <i class="fas fa-triangle-exclamation"></i>
+              <h3>تعذر تحميل الصفحة</h3>
+              <p id="browserErrorMsg">تحقق من الرابط أو اتصالك بالإنترنت</p>
+              <button class="ocr-ctrl-btn" onclick="browserReload()">
+                <i class="fas fa-rotate-right"></i> إعادة المحاولة
+              </button>
+              <button class="ocr-ctrl-btn" style="margin-top:6px" onclick="openExternal()">
+                <i class="fas fa-external-link-alt"></i> فتح خارجياً
+              </button>
+            </div>
+
+            <!-- Image overlay (Smart Reader inside browser) -->
+            <div class="browser-image-overlay" id="browserImageOverlay"></div>
+          </div>
+
+          <!-- Bottom Nav Bar -->
+          <div class="browser-nav-bar glass-card">
+            <button class="browser-nav-btn" id="btnBack" onclick="browserGoBack()" disabled>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+            <button class="browser-nav-btn" id="btnFwd" onclick="browserGoForward()" disabled>
+              <i class="fas fa-arrow-left"></i>
+            </button>
+            <button class="browser-nav-btn" onclick="browserHome()">
+              <i class="fas fa-house"></i>
+            </button>
+            <button class="browser-nav-btn" onclick="openExternal()">
+              <i class="fas fa-external-link-alt"></i>
+            </button>
+            <button class="browser-nav-btn smart-reader-btn" onclick="browserOpenInReader()">
+              <i class="fas fa-book-open-reader"></i>
+            </button>
+          </div>
+
+        </div>
+      </div><!-- #screenBrowser -->
+
+    </div><!-- .screens-container -->
+
+    <!-- ══ BOTTOM NAV ══ -->
+    <nav class="bottom-nav">
+      <button class="nav-item active" id="nav-home" onclick="navigateTo('screenHome');setActiveNav(this)">
+        <i class="fas fa-house"></i><span>Home</span>
+      </button>
+      <button class="nav-item" id="nav-search" onclick="navigateTo('screenSearch');setActiveNav(this)">
+        <i class="fas fa-magnifying-glass"></i><span>Search</span>
+      </button>
+      <button class="nav-item" id="nav-browser" onclick="navigateTo('screenBrowser');setActiveNav(this)">
+        <i class="fas fa-globe"></i><span>Browser</span>
+      </button>
+      <button class="nav-item" id="nav-reader" onclick="navigateTo('screenReader');setActiveNav(this)">
+        <i class="fas fa-book-open-reader"></i><span>Reader</span>
+      </button>
+      <button class="nav-item" id="nav-settings" onclick="navigateTo('screenSettings');setActiveNav(this)">
+        <i class="fas fa-gear"></i><span>Settings</span>
+      </button>
+    </nav>
+
+  </div><!-- .phone-frame -->
+</div><!-- .phone-wrapper -->
+
+<!-- TTS Indicator -->
+<div class="tts-indicator" id="ttsIndicator">
+  <i class="fas fa-volume-high"></i>
+  <div class="tts-waves">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <span class="tts-ind-text" id="ttsIndicatorText"></span>
+  <span class="tts-progress-text" id="ttsProgressText">0%</span>
+  <button class="tts-stop-btn" onclick="stopTTS()"><i class="fas fa-stop"></i></button>
+</div>
+
+<div class="task-progress" id="taskProgress">
+  <div class="task-progress-card">
+    <div class="task-progress-head">
+      <strong id="taskProgressTitle">جارٍ التنفيذ</strong>
+      <span id="taskProgressPercent">0%</span>
+    </div>
+    <div class="task-progress-track">
+      <div class="task-progress-bar" id="taskProgressBar"></div>
+    </div>
+    <div class="task-progress-status" id="taskProgressStatus">جارٍ التحميل...</div>
+  </div>
+</div>
+
+<!-- ══ SCRIPTS ══ -->
+<!-- Load order: config → services → screens -->
+<script src="js/config/app_config.js"></script>
+<script src="js/services/adblock_service.js"></script>
+<script src="js/services/ai_translate_service.js"></script>
+<script src="js/services/ocr_service.js"></script>
+<script src="js/services/tts_service.js"></script>
+<script src="js/services/app_records_service.js"></script>
+<script src="js/screens/smart_browser_screen.js"></script>
+
+</body>
+</html>
